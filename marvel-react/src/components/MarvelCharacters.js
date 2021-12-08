@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Card, Image } from 'antd';
-import SearchComponent from './Search';
+import Search from './Search';
 
 export default function MarvelCharacters() {
     const [charactersData, setCharactersData] = useState([]);
@@ -16,7 +16,7 @@ export default function MarvelCharacters() {
     }, [])
     return (
         <div className="app-body"> 
-        <SearchComponent/> 
+        <Search/> 
             {charactersData.map((item) => {
                 return(
                     <Card title={item.name} className="card-body">
