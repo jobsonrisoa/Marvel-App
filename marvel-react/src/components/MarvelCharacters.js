@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Card } from 'antd';
+import { Card, Image } from 'antd';
 
 export default function MarvelCharacters() {
     const [charactersData, setCharactersData] = useState([]);
@@ -18,6 +18,10 @@ export default function MarvelCharacters() {
             {charactersData.map((item) => {
                 return(
                     <Card title="Default size card" className="card-body">
+                        <Image
+                            width={200}
+                            src={`${item.thumbnail.path}/portrait_xlarge.jpg`}
+                        />
                         <p>{item.name}</p>
                     </Card>    
                 )
