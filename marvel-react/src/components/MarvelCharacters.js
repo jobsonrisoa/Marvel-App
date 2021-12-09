@@ -67,25 +67,28 @@ export default function MarvelCharacters() {
 
     }}
 
+    const [pageCount, setPageCount] = useState([]);
     useEffect(() => {
         if(searchItem === '') {
                 axios.get(`${APIENDPOINT}&apikey=${API_KEY}`)
                 .then((response) => {
                     //console.log(response.data.data.results)
-                    setCharactersData(response.data.data.results)
+                    setCharactersData(response.data.data.results);
                     setIsLoading(false);   
                     if(response.data.data.results.length === 0) {
                         toast.error('No characters found');
                     }
+                    setPageCount(Math.ceil(response.data.data.results.length/pageSize))
+                    
                 }).catch((error) => {
                     console.error(error)
                 })
         }
     }, [searchItem]);
 
-    const pageCount = charactersData? Math.ceil(charactersData.length/pageSize) : 0;
-    if (pageCount === 1) return null;
-    const pages = _.range(1, pageCount + 1);
+    const pageSum = pageCount? pageCount : 0; //charactersData? Math.ceil(charactersData.length/pageSize) : 0;
+    if (pageSum === 1) return null;
+    const pages = _.range(1, pageSum + 1);
 
     return (
         <div className="app-body"> 
@@ -130,7 +133,7 @@ export default function MarvelCharacters() {
             })
         )}
 
-             <nav>
+            <nav>
                 <ul className="pagination">
                     {
                         pages.map((page) => (
@@ -140,6 +143,7 @@ export default function MarvelCharacters() {
                 </ul>
 
              </nav>
+             
   
               <Modal
                 centered 
