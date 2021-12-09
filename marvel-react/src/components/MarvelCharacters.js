@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Card, Image } from 'antd';
 import Search from './Search';
 import MarvelLogo from '../assets/MarvelLogo.png';
+import { ToastContainer, toast } from 'react-toastify';
 
 export default function MarvelCharacters() {
     const [searchItem, setSearchItem] = useState('')
@@ -21,7 +22,7 @@ export default function MarvelCharacters() {
     }, [searchItem])
     return (
         <div className="app-body"> 
-        <img src={MarvelLogo} />
+        <img src={MarvelLogo} alt="MarvelLogo" className="marvel-logo"/>
         <Search searchTerm={searchTerm} /> 
             {charactersData.map((item) => {
                 return(
