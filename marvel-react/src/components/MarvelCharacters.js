@@ -11,7 +11,7 @@ const APIENDPOINT = `https://gateway.marvel.com:443/v1/public/characters?`;
 const API_KEY = `e0da45f6c6d5ce9fb1437f04918d9d2c`;
 
 export default function MarvelCharacters() {
-    //const [paginatedCards, setPaginatedCards]= useState();
+    const [currentPage, setCurrentPage]= useState(1);
     const [searchItem, setSearchItem] = useState('')
     const [comicsData, setComicsData] = useState([])
     const [isLoading, setIsLoading] = useState(true)
@@ -141,7 +141,12 @@ export default function MarvelCharacters() {
                 <ul className="pagination">
                     {
                         pages.map((page) => (
-                            <li className="page-link">{page}</li>
+                            <li className={
+                                page === currentPage? "page-item active" : "page-item" 
+                            }>
+                                <p className="page-link">{page}</p>
+                            
+                            </li>
                         ))
                     }
                 </ul>
