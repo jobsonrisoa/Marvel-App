@@ -11,7 +11,6 @@ const APIENDPOINT = `https://gateway.marvel.com:443/v1/public/characters?`;
 const API_KEY = `e0da45f6c6d5ce9fb1437f04918d9d2c`;
 
 export default function MarvelCharacters() {
-    const [currentPage, setCurrentPage]= useState(1);
     const [searchItem, setSearchItem] = useState('')
     const [comicsData, setComicsData] = useState([])
     const [isLoading, setIsLoading] = useState(true)
@@ -22,6 +21,8 @@ export default function MarvelCharacters() {
     
     const pageSize = 4;
     const [charactersData, setCharactersData] = useState([]);
+    const [paginatedCharactersData, setPaginatedCharactersData] = useState()
+    const [currentPage, setCurrentPage]= useState(1);
     const [isModalVisible, setIsModalVisible] = useState(false);
 
     const showModal = () => {
@@ -80,9 +81,10 @@ export default function MarvelCharacters() {
                         toast.error('No characters found');
                     }
                     setPageCount(Math.ceil(response.data.data.results.length/pageSize));
-                    setCharactersData(_(response.data.data.results).slice(0).take(pageSize).value());
                     
-                    //setCharactersData(response.data.data.results);
+                    setPaginatedCharactersData(response.data.data.results);
+
+                    setCharactersData(_(response.data.data.results).slice(0).take(pageSize).value());
                     
                 }).catch((error) => {
                     console.error(error)
@@ -90,9 +92,17 @@ export default function MarvelCharacters() {
         }
     }, [searchItem]);
 
+
     const pageSum = pageCount? pageCount : 0; //charactersData? Math.ceil(charactersData.length/pageSize) : 0;
     if (pageSum === 1) return null;
     const pages = _.range(1, pageSum + 1);
+
+    const pagination = (pageNumber) => {
+        setCurrentPage(pageNumber);
+        const startIndex = (pageNumber - 1) * pageSize;
+        const objPaginatedCharactersData = _(paginatedCharactersData).slice(startIndex).take(pageSize).value();
+        setCharactersData(objPaginatedCharactersData);
+    }
 
     return (
         <div className="app-body"> 
@@ -144,7 +154,9 @@ export default function MarvelCharacters() {
                             <li className={
                                 page === currentPage? "page-item active" : "page-item" 
                             }>
-                                <p className="page-link">{page}</p>
+                                <p className="page-link"
+                                onClick={()=> pagination(page)}
+                                >{page}</p>
                             
                             </li>
                         ))
