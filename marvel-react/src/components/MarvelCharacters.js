@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Card, Image, Button, Row, Col, Modal } from 'antd';
+import { Card, Image, Button, Row, Col, Modal, Spin } from 'antd';
 import Search from './Search';
 import MarvelLogo from '../assets/MarvelLogo.png';
 import { ToastContainer, toast } from 'react-toastify';
@@ -12,6 +12,8 @@ const API_KEY = `e0da45f6c6d5ce9fb1437f04918d9d2c`;
 export default function MarvelCharacters() {
     const [searchItem, setSearchItem] = useState('')
     const [comicsData, setComicsData] = useState([])
+    const [isLoading, setIsLoading] = useState(true)
+    const [isComicsLoading, setIsComicsLoading] = useState(true)
     const searchTerm = (searchItem) => {
         setSearchItem(searchItem)
     }
@@ -36,7 +38,9 @@ export default function MarvelCharacters() {
           axios.get(`${comicsData.collectionURI}?apikey=${API_KEY}`)
           .then((results) => {
                     setComicsData(results.data.data.results);
+                    setIsComicsLoading(false);
           })
+           
           showModal();
           // "http://gateway.marvel.com/v1/public/characters/1011334/comics"
           // "http://gateway.marvel.com/v1/public/comics/21366"
@@ -49,7 +53,8 @@ export default function MarvelCharacters() {
         axios.get(`${APIENDPOINT}name=${searchItem}&apikey=${API_KEY}`)
         .then((response) => {
             //console.log(response.data.data.results)
-            setCharactersData(response.data.data.results)   
+            setCharactersData(response.data.data.results) 
+            setIsLoading(false);  
             if(response.data.data.results.length === 0) {
                 toast.error('No characters found');
             }
@@ -65,7 +70,8 @@ export default function MarvelCharacters() {
                 axios.get(`${APIENDPOINT}&apikey=${API_KEY}`)
                 .then((response) => {
                     //console.log(response.data.data.results)
-                    setCharactersData(response.data.data.results)   
+                    setCharactersData(response.data.data.results)
+                    setIsLoading(false);   
                     if(response.data.data.results.length === 0) {
                         toast.error('No characters found');
                     }
@@ -88,7 +94,12 @@ export default function MarvelCharacters() {
             Search
         </Button>
         <ToastContainer />
-            {charactersData.map((item) => {
+        { isLoading ? (
+        <div className="spinner">
+            <Spin />
+        </div>
+        ) : (
+            charactersData.map((item) => {
                 return(
                     <Card title={item.name} className="card-body">
                     <Row>
@@ -110,19 +121,33 @@ export default function MarvelCharacters() {
                     </Row>
                 </Card>    
                 )
-            })}
-
-            <Modal
+            })
+        )}
+  
+              <Modal
                 centered 
-                title="Basic Modal" 
+                style={{top : 20}}
+                title="Comics Data" 
                 visible={isModalVisible} 
                 onOk={handleOk} 
                 onCancel={handleCancel}>
-                {comicsData.map((item) => {
-                    return(
-                        <h3>{item.title}</h3>
-                    )
-                })}
+
+                { isComicsLoading ? (
+                <div className="spinner">
+                    <Spin />
+                </div>
+                ) : (
+                    comicsData.map((item) => {
+                        return(
+                            <div className="comics-data">
+                                <h3>{item.title}</h3>
+                                <p>{item.description ? item.description : "No Description Avaiable"}</p>
+                            </div>
+                        )
+                    })
+                )}
+                    
+                {}
                
                 
                     

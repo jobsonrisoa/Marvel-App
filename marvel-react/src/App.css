@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+* {
+    font-family: 'Montserrat', sans-serif;
+}
+
 .app-body {
     padding: 20px;
     display: flex;
@@ -10,8 +16,18 @@
 .card-body {
     width: 600px;
     margin: 10px !important;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .marvel-logo {
     width: 400px;
+}
+
+.comics-data {
+    padding: 10px;
+}
+
+.spinner {
+    margin: 50px;
+    text-align: center;
 }
