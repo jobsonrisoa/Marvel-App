@@ -17,6 +17,9 @@ export default function MarvelCharacters() {
     const [charactersData, setCharactersData] = useState([]);
 
     const searchChars = () => {
+    if(searchItem) {
+
+
         axios.get(`${APIENDPOINT}name=${searchItem}&apikey=${API_KEY}`)
         .then((response) => {
             //console.log(response.data.data.results)
@@ -27,7 +30,9 @@ export default function MarvelCharacters() {
         }).catch((error) => {
             console.error(error)
         })
-    }
+
+        
+    }}
 
     useEffect(() => {
         if(searchItem === '') {
@@ -70,3 +75,4 @@ export default function MarvelCharacters() {
         </div>
     )
 }
+
