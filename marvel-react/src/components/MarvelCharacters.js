@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Card, Image, Button } from 'antd';
 import Search from './Search';
@@ -28,6 +28,23 @@ export default function MarvelCharacters() {
             console.error(error)
         })
     }
+
+    useEffect(() => {
+        if(searchItem === '') {
+                axios.get(`${APIENDPOINT}&apikey=${API_KEY}`)
+                .then((response) => {
+                    //console.log(response.data.data.results)
+                    setCharactersData(response.data.data.results)   
+                    if(response.data.data.results.length === 0) {
+                        toast.error('No characters found');
+                    }
+                }).catch((error) => {
+                    console.error(error)
+                })
+        }
+    }, [searchItem])
+
+
     return (
         <div className="app-body"> 
         <img src={MarvelLogo} alt="MarvelLogo" className="marvel-logo"/>
