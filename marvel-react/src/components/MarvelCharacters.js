@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Card, Image, Button } from 'antd';
+import { Card, Image, Button, Row, Col } from 'antd';
 import Search from './Search';
 import MarvelLogo from '../assets/MarvelLogo.png';
 import { ToastContainer, toast } from 'react-toastify';
@@ -31,7 +31,7 @@ export default function MarvelCharacters() {
             console.error(error)
         })
 
-        
+
     }}
 
     useEffect(() => {
@@ -65,10 +65,18 @@ export default function MarvelCharacters() {
             {charactersData.map((item) => {
                 return(
                     <Card title={item.name} className="card-body">
-                        <Image
-                            width={200}
-                            src={`${item.thumbnail.path}/portrait_incredible.jpg`}
-                        />
+                    <Row>
+                        <Col span={12}>col-12
+                            <Image
+                                width={200}
+                                src={`${item.thumbnail.path}/portrait_incredible.jpg`}
+                            />
+                        </Col>
+                        <Col span={12}>col-12
+                            <p>{item.description ? item.description : 'No Description Avaiable'}</p>
+                        </Col>
+                    </Row>
+                       
                     </Card>    
                 )
             })}
