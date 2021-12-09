@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Card, Image, Button, Row, Col } from 'antd';
+import { Card, Image, Button, Row, Col, Modal } from 'antd';
 import Search from './Search';
 import MarvelLogo from '../assets/MarvelLogo.png';
 import { ToastContainer, toast } from 'react-toastify';
@@ -14,7 +14,25 @@ export default function MarvelCharacters() {
     const searchTerm = (searchItem) => {
         setSearchItem(searchItem)
     }
+    
     const [charactersData, setCharactersData] = useState([]);
+    const [isModalVisible, setIsModalVisible] = useState(false);
+
+    const showModal = () => {
+        setIsModalVisible(true);
+      };
+    
+      const handleOk = () => {
+        setIsModalVisible(false);
+      };
+    
+      const handleCancel = () => {
+        setIsModalVisible(false);
+      };
+
+      const fetchComics = () => {
+          showModal();
+      }
 
     const searchChars = () => {
     if(searchItem) {
@@ -66,20 +84,38 @@ export default function MarvelCharacters() {
                 return(
                     <Card title={item.name} className="card-body">
                     <Row>
-                        <Col span={12}>col-12
+                        <Col span={12}>
                             <Image
                                 width={200}
                                 src={`${item.thumbnail.path}/portrait_incredible.jpg`}
                             />
                         </Col>
-                        <Col span={12}>col-12
+                        <Col span={12}>
                             <p>{item.description ? item.description : 'No Description Avaiable'}</p>
+                            <Button type="primary" 
+                                    size="large"
+                                    onClick={() => fetchComics(item.comics)}
+                            >
+                                Open Stories
+                            </Button>
                         </Col>
                     </Row>
-                       
-                    </Card>    
+                </Card>    
                 )
             })}
+
+            <Modal
+                centered 
+                title="Basic Modal" 
+                visible={isModalVisible} 
+                onOk={handleOk} 
+                onCancel={handleCancel}
+            >
+                    <p>Some contents...</p>
+                    <p>Some contents...</p>
+                    <p>Some contents...</p>
+            </Modal>
+
         </div>
     )
 }
