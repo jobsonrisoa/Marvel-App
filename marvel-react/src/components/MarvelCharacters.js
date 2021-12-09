@@ -11,6 +11,7 @@ const APIENDPOINT = `https://gateway.marvel.com:443/v1/public/characters?`;
 const API_KEY = `e0da45f6c6d5ce9fb1437f04918d9d2c`;
 
 export default function MarvelCharacters() {
+    //const [paginatedCards, setPaginatedCards]= useState();
     const [searchItem, setSearchItem] = useState('')
     const [comicsData, setComicsData] = useState([])
     const [isLoading, setIsLoading] = useState(true)
@@ -68,17 +69,20 @@ export default function MarvelCharacters() {
     }}
 
     const [pageCount, setPageCount] = useState([]);
+    
     useEffect(() => {
         if(searchItem === '') {
-                axios.get(`${APIENDPOINT}&apikey=${API_KEY}`)
+                axios.get(`${APIENDPOINT}limit=50&&apikey=${API_KEY}`)
                 .then((response) => {
                     //console.log(response.data.data.results)
-                    setCharactersData(response.data.data.results);
                     setIsLoading(false);   
                     if(response.data.data.results.length === 0) {
                         toast.error('No characters found');
                     }
-                    setPageCount(Math.ceil(response.data.data.results.length/pageSize))
+                    setPageCount(Math.ceil(response.data.data.results.length/pageSize));
+                    setCharactersData(_(response.data.data.results).slice(0).take(pageSize).value());
+                    
+                    //setCharactersData(response.data.data.results);
                     
                 }).catch((error) => {
                     console.error(error)
