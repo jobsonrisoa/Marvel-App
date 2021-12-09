@@ -5,6 +5,7 @@ import Search from './Search';
 import MarvelLogo from '../assets/MarvelLogo.png';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import _ from 'lodash';
 
 const APIENDPOINT = `https://gateway.marvel.com:443/v1/public/characters?`;
 const API_KEY = `e0da45f6c6d5ce9fb1437f04918d9d2c`;
@@ -18,6 +19,7 @@ export default function MarvelCharacters() {
         setSearchItem(searchItem)
     }
     
+    const pageSize = 4;
     const [charactersData, setCharactersData] = useState([]);
     const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -79,8 +81,11 @@ export default function MarvelCharacters() {
                     console.error(error)
                 })
         }
-    }, [searchItem])
+    }, [searchItem]);
 
+    const pageCount = charactersData? Math.ceil(charactersData.length/pageSize) : 0;
+    if (pageCount === 1) return null;
+    const pages = _.range(1, pageCount + 1);
 
     return (
         <div className="app-body"> 
@@ -94,6 +99,7 @@ export default function MarvelCharacters() {
             Search
         </Button>
         <ToastContainer />
+        
         { isLoading ? (
         <div className="spinner">
             <Spin />
@@ -119,10 +125,21 @@ export default function MarvelCharacters() {
                             </Button>
                         </Col>
                     </Row>
-                </Card>    
+                </Card>
                 )
             })
         )}
+
+             <nav>
+                <ul className="pagination">
+                    {
+                        pages.map((page) => (
+                            <li className="page-link">{page}</li>
+                        ))
+                    }
+                </ul>
+
+             </nav>
   
               <Modal
                 centered 
