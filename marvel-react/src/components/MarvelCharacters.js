@@ -11,6 +11,7 @@ const API_KEY = `e0da45f6c6d5ce9fb1437f04918d9d2c`;
 
 export default function MarvelCharacters() {
     const [searchItem, setSearchItem] = useState('')
+    const [comicsData, setComicsData] = useState([])
     const searchTerm = (searchItem) => {
         setSearchItem(searchItem)
     }
@@ -30,8 +31,15 @@ export default function MarvelCharacters() {
         setIsModalVisible(false);
       };
 
-      const fetchComics = () => {
+      const fetchComics = (comicsData) => {
+          console.log(comicsData.collectionURI)
+          axios.get(`${comicsData.collectionURI}?apikey=${API_KEY}`)
+          .then((results) => {
+                    setComicsData(results.data.data.results);
+          })
           showModal();
+          // "http://gateway.marvel.com/v1/public/characters/1011334/comics"
+          // "http://gateway.marvel.com/v1/public/comics/21366"
       }
 
     const searchChars = () => {
@@ -109,11 +117,15 @@ export default function MarvelCharacters() {
                 title="Basic Modal" 
                 visible={isModalVisible} 
                 onOk={handleOk} 
-                onCancel={handleCancel}
-            >
-                    <p>Some contents...</p>
-                    <p>Some contents...</p>
-                    <p>Some contents...</p>
+                onCancel={handleCancel}>
+                {comicsData.map((item) => {
+                    return(
+                        <h3>{item.title}</h3>
+                    )
+                })}
+               
+                
+                    
             </Modal>
 
         </div>
