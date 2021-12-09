@@ -3,12 +3,12 @@ import { Input  } from 'antd';
 // eslint-disable-next-line
 import { AudioOutlined } from '@ant-design/icons';
 
-const { Search } = Input;
+//const { Search } = Input;
 
 export default function SearchComponent({searchTerm}) {   
     return (
         <div>
-            <Search 
+            <Input 
             placeholder="Enter your character's name..." 
             style={{ width: 500 }} 
             onChange={(e) => searchTerm(e.target.value)}
