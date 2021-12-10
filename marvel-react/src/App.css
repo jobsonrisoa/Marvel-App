@@ -2,15 +2,19 @@
 
 * {
     font-family: 'Montserrat', sans-serif;
+    text-decoration: none;
+    list-style-type: none;
 }
 
 .app-body {
-    padding: 20px;
+    background-color: #E5E5E5;
+    max-width: 1366px; 
+    padding: 0px;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    margin: 20px;
+    margin: 0 20 20 20;
 }
 
 .card-body {
@@ -31,3 +35,32 @@
     margin: 50px;
     text-align: center;
 }
+
+.header-nav {
+    max-height: 64px;
+    padding: 0px 0px 20px 0px;
+
+}
+.main-nav {
+    display: -webkit-flex;
+    display: flex;
+    width: 1366px;
+    
+    background: gray;
+    
+  }
+  .main-nav li:first-child {
+    margin-right: auto;
+  }
+  .main-nav span, img {
+    
+    border-radius: 5px;
+    font-size: 14px;
+    color: #555555;
+    display: inline-block;
+    margin: 19px 24px 21px 18px;
+    text-decoration: none;
+  }
+  .main-nav .logo {
+    width: 96px;
+  }

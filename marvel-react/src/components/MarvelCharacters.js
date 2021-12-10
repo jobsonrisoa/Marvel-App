@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Card, Image, Button, Row, Col, Modal, Spin } from 'antd';
 import Search from './Search';
 import MarvelLogo from '../assets/MarvelLogo.png';
+import Logo from '../assets/logo.svg'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import _ from 'lodash';
@@ -106,6 +107,13 @@ export default function MarvelCharacters() {
 
     return (
         <div className="app-body"> 
+        <nav className="header-nav">
+             <ul class="main-nav">
+                <li><img class="logo" src={Logo}/></li>
+                <li><span >Menu 4</span></li>
+                <li><span >Menu 4</span></li>
+            </ul>
+        </nav>
         <img src={MarvelLogo} alt="MarvelLogo" className="marvel-logo"/>
         <Search searchTerm={searchTerm} /> 
         <Button type="primary" 
