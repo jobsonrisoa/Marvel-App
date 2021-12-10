@@ -109,9 +109,10 @@ export default function MarvelCharacters() {
         <div className="app-body"> 
         <nav className="header-nav">
              <ul class="main-nav">
-                <li><img class="logo" src={Logo}/></li>
-                <li><span >Menu 4</span></li>
-                <li><span >Menu 4</span></li>
+                <li><img class="logo" src={Logo} alt="Objective-logo"/></li>
+                <li className="student-name"><span className="meta-name">Nome do Candidato</span>
+                    <span className="complete-name">Jobson Ribeiro</span></li>
+                <li><span className="name-initials">JR</span></li>
             </ul>
         </nav>
         <img src={MarvelLogo} alt="MarvelLogo" className="marvel-logo"/>
