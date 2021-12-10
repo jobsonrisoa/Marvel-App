@@ -94,7 +94,7 @@ export default function MarvelCharacters() {
     }, [searchItem]);
 
 
-    const pageSum = pageCount? pageCount : 0; //charactersData? Math.ceil(charactersData.length/pageSize) : 0;
+    const pageSum = pageCount? pageCount : 0; 
     if (pageSum === 1) return null;
     const pages = _.range(1, pageSum + 1);
 
